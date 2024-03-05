@@ -1,0 +1,65 @@
+﻿<Window x:Class="lab13.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:lab13"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid Background="#FFFDFAF1">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.15*"></RowDefinition>
+            <RowDefinition Height="0.7*"></RowDefinition>
+            <RowDefinition Height="0.15*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.5*"></ColumnDefinition>
+            <ColumnDefinition Width="0.5*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock FontSize="26" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.Row="0">Список дел</TextBlock>
+
+        <CheckBox Name="checkShow" 
+                  Grid.Row="0" Grid.Column="1" 
+                  VerticalAlignment="Bottom" Margin="0 0 0 5" 
+                  IsChecked="False" 
+                  
+                  >Добавление новых дел</CheckBox>
+        <Border Grid.Row="1" Grid.Column="0"  BorderBrush="Gray" BorderThickness="1" Margin="0 0 10 0">
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                <ListBox Name="mainListBox" Background="#FDF5DF">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Name="ListToDo">
+                                <TextBlock Text="{Binding Path=NameS}"></TextBlock>
+                                <TextBlock Text="{Binding Path=DateDoS}"></TextBlock>
+                                <TextBlock Text="{Binding Path=DiscrS}"></TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>                    
+                </ListBox>
+            </ScrollViewer>
+        </Border>
+        <Border Grid.Row="1" Grid.Column="1"  BorderBrush="Gray" BorderThickness="1" Margin="10 0 0 0">
+            <Border.Resources>
+                <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+            </Border.Resources>
+            <GroupBox Visibility="{Binding ElementName=checkShow, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}" Name="groupBoxToDo" Background="#FDF5DF"  >
+                <StackPanel>
+                    <TextBlock Margin="5 5 5 5">Название:</TextBlock>
+                    <TextBox Name="titleToDo" Margin="5 5 5 5" AcceptsReturn="True" AcceptsTab="True"></TextBox>
+                    <TextBlock Margin="5 5 5 5">Выполнить до:</TextBlock>
+                    <DatePicker Name="dateToDo" Margin="5 5 5 5" ></DatePicker>
+                    <TextBlock Margin="5 5 5 5">Описание:</TextBlock>
+                    <TextBox Name="descriptionToDo" MinLines="10" Margin="5 5 5 5" AcceptsReturn="True" AcceptsTab="True"></TextBox>
+                </StackPanel>
+            </GroupBox>
+        </Border>
+        <Viewbox Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2">
+            <StackPanel Orientation="Horizontal">
+                <Button Click="Button_delete_Click" Background="#5EBEC4" Margin="20 10 60 5">Удалить дела</Button>
+                <Button Click="button_Add_Click"  Name="buttonAdd" Background="#5EBEC4" Margin="60 10 20 5" ToolTip="При добавлении дело появится в списке слева, и его придется выполнить." >Добавить дело</Button>
+            </StackPanel>
+        </Viewbox>
+    </Grid>
+</Window>
